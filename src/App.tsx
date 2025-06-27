@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { SalesProvider } from './contexts/SalesContext';
 import { NotificationProvider } from './contexts/NotificationContext';
+import { UserProvider } from './contexts/UserContext';
 import { Sidebar } from './components/Layout/Sidebar';
 import { Header } from './components/Layout/Header';
 import { Dashboard } from './components/Dashboard/Dashboard';
@@ -81,11 +82,13 @@ function AppContent() {
 function App() {
   return (
     <AuthProvider>
-      <SalesProvider>
-        <NotificationProvider>
-          <AppContent />
-        </NotificationProvider>
-      </SalesProvider>
+      <UserProvider>
+        <SalesProvider>
+          <NotificationProvider>
+            <AppContent />
+          </NotificationProvider>
+        </SalesProvider>
+      </UserProvider>
     </AuthProvider>
   );
 }
