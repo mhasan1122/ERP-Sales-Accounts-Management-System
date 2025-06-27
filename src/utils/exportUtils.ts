@@ -5,7 +5,7 @@ import { Sale, Product, Customer } from '../types';
 
 // PDF Export Functions
 export const exportSalesToPDF = (sales: Sale[]) => {
-  const doc = new jsPDF();
+  const doc = new jsPDF('portrait', 'mm', 'a4'); // A4 portrait as requested
   
   // Add company header
   doc.setFontSize(20);
@@ -37,7 +37,7 @@ export const exportSalesToPDF = (sales: Sale[]) => {
     `BDT ${sale.unitPrice.toFixed(2)}`,
     `BDT ${sale.totalAmount.toFixed(2)}`,
     new Date(sale.deliveryDate).toLocaleDateString(),
-    sale.status.toUpperCase()
+    sale.status.toUpperCase().replace(/\s+/g, ' ').trim()
   ]);
   
   // Add table
@@ -45,9 +45,15 @@ export const exportSalesToPDF = (sales: Sale[]) => {
     head: [['Sale Date', 'Product', 'Customer', 'Qty', 'Unit Price (BDT)', 'Total (BDT)', 'Delivery', 'Status']],
     body: tableData,
     startY: 55,
+    tableWidth: 'auto',
+    margin: { left: 8, right: 8 }, // Optimized margins for A4 portrait
     styles: {
-      fontSize: 8,
-      cellPadding: 3,
+      fontSize: 7,
+      cellPadding: 2,
+      overflow: 'visible',
+      cellWidth: 'auto',
+      halign: 'left',
+      minCellHeight: 7,
     },
     headStyles: {
       fillColor: [41, 128, 185],
@@ -58,14 +64,14 @@ export const exportSalesToPDF = (sales: Sale[]) => {
       fillColor: [245, 245, 245],
     },
     columnStyles: {
-      0: { cellWidth: 20 },
-      1: { cellWidth: 30 },
-      2: { cellWidth: 25 },
-      3: { cellWidth: 15 },
-      4: { cellWidth: 20 },
-      5: { cellWidth: 20 },
-      6: { cellWidth: 20 },
-      7: { cellWidth: 20 },
+      0: { cellWidth: 18, overflow: 'visible' }, // Sale Date
+      1: { cellWidth: 28, overflow: 'visible' }, // Product - optimized for A4
+      2: { cellWidth: 25, overflow: 'visible' }, // Customer - optimized for A4
+      3: { cellWidth: 12, overflow: 'visible' }, // Qty
+      4: { cellWidth: 25, overflow: 'visible' }, // Unit Price (BDT)
+      5: { cellWidth: 25, overflow: 'visible' }, // Total (BDT)
+      6: { cellWidth: 18, overflow: 'visible' }, // Delivery
+      7: { cellWidth: 24, overflow: 'visible' }, // Status
     },
   });
   
@@ -84,7 +90,7 @@ export const exportSalesToPDF = (sales: Sale[]) => {
 };
 
 export const exportProductsToPDF = (products: Product[]) => {
-  const doc = new jsPDF();
+  const doc = new jsPDF('portrait', 'mm', 'a4'); // A4 portrait as requested
   
   // Add header
   doc.setFontSize(20);
@@ -122,9 +128,15 @@ export const exportProductsToPDF = (products: Product[]) => {
     head: [['Product Name', 'Category', 'Unit Price (BDT)', 'Stock', 'Total Value (BDT)', 'Status']],
     body: tableData,
     startY: 55,
+    tableWidth: 'auto',
+    margin: { left: 8, right: 8 }, // Optimized margins for A4 portrait
     styles: {
-      fontSize: 9,
-      cellPadding: 4,
+      fontSize: 8,
+      cellPadding: 3,
+      overflow: 'visible',
+      cellWidth: 'auto',
+      halign: 'left',
+      minCellHeight: 8,
     },
     headStyles: {
       fillColor: [46, 125, 50],
@@ -135,12 +147,12 @@ export const exportProductsToPDF = (products: Product[]) => {
       fillColor: [245, 245, 245],
     },
     columnStyles: {
-      0: { cellWidth: 40 },
-      1: { cellWidth: 30 },
-      2: { cellWidth: 25 },
-      3: { cellWidth: 20 },
-      4: { cellWidth: 30 },
-      5: { cellWidth: 25 },
+      0: { cellWidth: 40, overflow: 'visible' }, // Product Name - optimized for A4
+      1: { cellWidth: 25, overflow: 'visible' }, // Category
+      2: { cellWidth: 28, overflow: 'visible' }, // Unit Price (BDT)
+      3: { cellWidth: 18, overflow: 'visible' }, // Stock
+      4: { cellWidth: 32, overflow: 'visible' }, // Total Value (BDT)
+      5: { cellWidth: 25, overflow: 'visible' }, // Status
     },
   });
   
@@ -158,7 +170,7 @@ export const exportProductsToPDF = (products: Product[]) => {
 };
 
 export const exportCustomersToPDF = (customers: Customer[], sales: Sale[]) => {
-  const doc = new jsPDF();
+  const doc = new jsPDF('portrait', 'mm', 'a4'); // A4 portrait as requested
   
   // Add header
   doc.setFontSize(20);
@@ -195,9 +207,15 @@ export const exportCustomersToPDF = (customers: Customer[], sales: Sale[]) => {
     head: [['Customer Name', 'Email', 'Phone', 'Status', 'Orders', 'Total Spent (BDT)']],
     body: tableData,
     startY: 55,
+    tableWidth: 'auto',
+    margin: { left: 8, right: 8 }, // Optimized margins for A4 portrait
     styles: {
-      fontSize: 9,
-      cellPadding: 4,
+      fontSize: 8,
+      cellPadding: 3,
+      overflow: 'visible',
+      cellWidth: 'auto',
+      halign: 'left',
+      minCellHeight: 8,
     },
     headStyles: {
       fillColor: [156, 39, 176],
@@ -208,12 +226,12 @@ export const exportCustomersToPDF = (customers: Customer[], sales: Sale[]) => {
       fillColor: [245, 245, 245],
     },
     columnStyles: {
-      0: { cellWidth: 35 },
-      1: { cellWidth: 45 },
-      2: { cellWidth: 30 },
-      3: { cellWidth: 20 },
-      4: { cellWidth: 20 },
-      5: { cellWidth: 30 },
+      0: { cellWidth: 32, overflow: 'visible' }, // Customer Name - optimized for A4
+      1: { cellWidth: 42, overflow: 'visible' }, // Email - optimized for A4
+      2: { cellWidth: 25, overflow: 'visible' }, // Phone
+      3: { cellWidth: 20, overflow: 'visible' }, // Status
+      4: { cellWidth: 15, overflow: 'visible' }, // Orders
+      5: { cellWidth: 32, overflow: 'visible' }, // Total Spent (BDT)
     },
   });
   
