@@ -3,6 +3,7 @@ import { Edit3, Trash2, Calendar, Eye } from 'lucide-react';
 import { useSales } from '../../contexts/SalesContext';
 import { Sale } from '../../types';
 import { EditSaleForm } from './EditSaleForm';
+import { exportSalesToPDF, exportSalesToExcel } from '../../utils/exportUtils';
 
 export function SalesTable() {
   const { sales, updateSaleStatus, deleteSale } = useSales();
@@ -58,7 +59,7 @@ export function SalesTable() {
       <div className="p-4 sm:p-6 border-b border-gray-200">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
           <h3 className="text-base sm:text-lg font-semibold text-gray-900">Sales Records</h3>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
@@ -70,6 +71,23 @@ export function SalesTable() {
               <option value="confirmed">Confirmed</option>
               <option value="overdue">Overdue</option>
             </select>
+
+            <div className="flex space-x-2">
+              <button
+                onClick={() => exportSalesToPDF(filteredSales)}
+                className="px-3 py-2 bg-red-600 text-white text-xs sm:text-sm rounded-lg hover:bg-red-700 transition-colors"
+                title="Export to PDF"
+              >
+                PDF
+              </button>
+              <button
+                onClick={() => exportSalesToExcel(filteredSales)}
+                className="px-3 py-2 bg-green-600 text-white text-xs sm:text-sm rounded-lg hover:bg-green-700 transition-colors"
+                title="Export to Excel"
+              >
+                Excel
+              </button>
+            </div>
           </div>
         </div>
       </div>

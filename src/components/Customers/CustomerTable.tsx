@@ -3,6 +3,7 @@ import { Edit3, Trash2, User, Mail, Phone, MapPin, ShoppingCart, Calendar, Users
 import { useSales } from '../../contexts/SalesContext';
 import { Customer } from '../../types';
 import { EditCustomerForm } from './EditCustomerForm';
+import { exportCustomersToPDF, exportCustomersToExcel } from '../../utils/exportUtils';
 
 export function CustomerTable() {
   const { customers, sales, deleteCustomer } = useSales();
@@ -35,8 +36,26 @@ export function CustomerTable() {
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-      <div className="p-6 border-b border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900">Customer Directory</h3>
+      <div className="p-4 sm:p-6 border-b border-gray-200">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900">Customer Directory</h3>
+          <div className="flex space-x-2">
+            <button
+              onClick={() => exportCustomersToPDF(customers, sales)}
+              className="px-3 py-2 bg-red-600 text-white text-xs sm:text-sm rounded-lg hover:bg-red-700 transition-colors"
+              title="Export to PDF"
+            >
+              PDF
+            </button>
+            <button
+              onClick={() => exportCustomersToExcel(customers, sales)}
+              className="px-3 py-2 bg-green-600 text-white text-xs sm:text-sm rounded-lg hover:bg-green-700 transition-colors"
+              title="Export to Excel"
+            >
+              Excel
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="overflow-x-auto">

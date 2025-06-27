@@ -2,25 +2,82 @@ import React, { useState } from 'react';
 import { Download, FileText, BarChart3, Calendar } from 'lucide-react';
 import { FaBangladeshiTakaSign } from 'react-icons/fa6';
 import { useSales } from '../../contexts/SalesContext';
+import {
+  exportSalesToPDF,
+  exportSalesToExcel,
+  exportProductsToPDF,
+  exportProductsToExcel,
+  exportCustomersToPDF,
+  exportCustomersToExcel
+} from '../../utils/exportUtils';
 
 export function Reports() {
-  const { sales, dashboardStats } = useSales();
+  const { sales, products, customers, dashboardStats } = useSales();
   const [reportType, setReportType] = useState('sales');
   const [dateRange, setDateRange] = useState('month');
 
   const generateReport = (format: 'pdf' | 'excel') => {
-    // Mock report generation
-    const reportData = {
-      type: reportType,
-      dateRange,
-      generatedAt: new Date().toISOString(),
-      data: sales
-    };
-    
-    console.log(`Generating ${format.toUpperCase()} report:`, reportData);
-    
-    // In a real application, this would trigger the actual report generation
-    alert(`${format.toUpperCase()} report generation started. You'll receive a download link shortly.`);
+    try {
+      // Filter data based on date range
+      const filteredSales = filterDataByDateRange(sales, dateRange);
+
+      if (format === 'pdf') {
+        switch (reportType) {
+          case 'sales':
+            exportSalesToPDF(filteredSales);
+            break;
+          case 'products':
+            exportProductsToPDF(products);
+            break;
+          case 'customers':
+            exportCustomersToPDF(customers, sales);
+            break;
+          default:
+            exportSalesToPDF(filteredSales);
+        }
+      } else {
+        switch (reportType) {
+          case 'sales':
+            exportSalesToExcel(filteredSales);
+            break;
+          case 'products':
+            exportProductsToExcel(products);
+            break;
+          case 'customers':
+            exportCustomersToExcel(customers, sales);
+            break;
+          default:
+            exportSalesToExcel(filteredSales);
+        }
+      }
+    } catch (error) {
+      console.error('Export error:', error);
+      alert('Error generating report. Please try again.');
+    }
+  };
+
+  const filterDataByDateRange = (salesData: typeof sales, range: string) => {
+    const now = new Date();
+    const startDate = new Date();
+
+    switch (range) {
+      case 'week':
+        startDate.setDate(now.getDate() - 7);
+        break;
+      case 'month':
+        startDate.setMonth(now.getMonth() - 1);
+        break;
+      case 'quarter':
+        startDate.setMonth(now.getMonth() - 3);
+        break;
+      case 'year':
+        startDate.setFullYear(now.getFullYear() - 1);
+        break;
+      default:
+        return salesData; // Return all data for 'all' option
+    }
+
+    return salesData.filter(sale => new Date(sale.saleDate) >= startDate);
   };
 
   const reportTypes = [
