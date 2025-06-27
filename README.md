@@ -2,6 +2,8 @@
 
 A modern, full-stack **ERP system** focused on **Sales, Products, and Customer Management**, featuring real-time data visualization, advanced inventory tracking, and relationship-based customer insights.
 
+# Here is the link for DEMO : https://erpsales.netlify.app/
+
 ---
 
 ## 🚀 Key Features
