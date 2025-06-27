@@ -74,7 +74,7 @@ export function ProductForm({ onClose }: ProductFormProps) {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Price ($)
+              Price (৳)
             </label>
             <input
               type="number"
@@ -116,7 +116,7 @@ export function ProductForm({ onClose }: ProductFormProps) {
               </div>
               <div className="flex justify-between">
                 <span>Unit Price:</span>
-                <span>${formData.price.toFixed(2)}</span>
+                <span>৳{formData.price.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
                 <span>Stock:</span>
@@ -124,7 +124,7 @@ export function ProductForm({ onClose }: ProductFormProps) {
               </div>
               <div className="flex justify-between font-semibold text-lg border-t pt-2">
                 <span>Total Value:</span>
-                <span>${(formData.price * formData.stock).toFixed(2)}</span>
+                <span>৳{(formData.price * formData.stock).toFixed(2)}</span>
               </div>
             </div>
           </div>

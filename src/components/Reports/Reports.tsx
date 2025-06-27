@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Download, FileText, BarChart3, Calendar } from 'lucide-react';
+import { FaBangladeshiTakaSign } from 'react-icons/fa6';
 import { useSales } from '../../contexts/SalesContext';
 
 export function Reports() {
@@ -59,86 +60,86 @@ export function Reports() {
   const analytics = getSalesAnalytics();
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Reports & Analytics</h1>
-        <p className="text-gray-600">Generate comprehensive reports and analyze your business data</p>
+    <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+      <div className="text-center sm:text-left">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Reports & Analytics</h1>
+        <p className="text-sm sm:text-base text-gray-600 mt-1">Generate comprehensive reports and analyze your business data</p>
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="bg-white p-4 sm:p-6 rounded-lg border border-gray-200">
           <div className="flex items-center">
-            <BarChart3 className="w-8 h-8 text-blue-500" />
-            <div className="ml-4">
-              <p className="text-2xl font-bold text-gray-900">{analytics.monthlySales}</p>
-              <p className="text-sm text-gray-600">Sales This Month</p>
+            <BarChart3 className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500 flex-shrink-0" />
+            <div className="ml-3 sm:ml-4 min-w-0">
+              <p className="text-xl sm:text-2xl font-bold text-gray-900">{analytics.monthlySales}</p>
+              <p className="text-xs sm:text-sm text-gray-600">Sales This Month</p>
             </div>
           </div>
         </div>
-        
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
+
+        <div className="bg-white p-4 sm:p-6 rounded-lg border border-gray-200">
           <div className="flex items-center">
-            <FileText className="w-8 h-8 text-green-500" />
-            <div className="ml-4">
-              <p className="text-2xl font-bold text-gray-900">${analytics.monthlyRevenue.toFixed(0)}</p>
-              <p className="text-sm text-gray-600">Revenue This Month</p>
+            <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-green-500 flex-shrink-0" />
+            <div className="ml-3 sm:ml-4 min-w-0">
+              <p className="text-xl sm:text-2xl font-bold text-gray-900">৳{analytics.monthlyRevenue.toFixed(0)}</p>
+              <p className="text-xs sm:text-sm text-gray-600">Revenue This Month</p>
             </div>
           </div>
         </div>
-        
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
+
+        <div className="bg-white p-4 sm:p-6 rounded-lg border border-gray-200">
           <div className="flex items-center">
-            <Calendar className="w-8 h-8 text-purple-500" />
-            <div className="ml-4">
-              <p className="text-2xl font-bold text-gray-900">{dashboardStats.pendingDeliveries}</p>
-              <p className="text-sm text-gray-600">Pending Deliveries</p>
+            <Calendar className="w-6 h-6 sm:w-8 sm:h-8 text-purple-500 flex-shrink-0" />
+            <div className="ml-3 sm:ml-4 min-w-0">
+              <p className="text-xl sm:text-2xl font-bold text-gray-900">{dashboardStats.pendingDeliveries}</p>
+              <p className="text-xs sm:text-sm text-gray-600">Pending Deliveries</p>
             </div>
           </div>
         </div>
-        
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
+
+        <div className="bg-white p-4 sm:p-6 rounded-lg border border-gray-200">
           <div className="flex items-center">
-            <Download className="w-8 h-8 text-orange-500" />
-            <div className="ml-4">
-              <p className="text-2xl font-bold text-gray-900">24</p>
-              <p className="text-sm text-gray-600">Reports Generated</p>
+            <Download className="w-6 h-6 sm:w-8 sm:h-8 text-orange-500 flex-shrink-0" />
+            <div className="ml-3 sm:ml-4 min-w-0">
+              <p className="text-xl sm:text-2xl font-bold text-gray-900">24</p>
+              <p className="text-xs sm:text-sm text-gray-600">Reports Generated</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Report Generator */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-6">Generate Reports</h2>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6">
+        <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Generate Reports</h2>
+
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 sm:gap-8">
           <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Report Configuration</h3>
-            
-            <div className="space-y-4">
+            <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-3 sm:mb-4">Report Configuration</h3>
+
+            <div className="space-y-3 sm:space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Report Type</label>
-                <select 
+                <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">Report Type</label>
+                <select
                   value={reportType}
                   onChange={(e) => setReportType(e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-2 sm:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                 >
                   {reportTypes.map(type => (
                     <option key={type.id} value={type.id}>{type.name}</option>
                   ))}
                 </select>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-xs sm:text-sm text-gray-500 mt-1">
                   {reportTypes.find(t => t.id === reportType)?.description}
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Date Range</label>
-                <select 
+                <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">Date Range</label>
+                <select
                   value={dateRange}
                   onChange={(e) => setDateRange(e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-2 sm:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                 >
                   <option value="week">Last 7 Days</option>
                   <option value="month">Last 30 Days</option>
@@ -182,7 +183,7 @@ export function Reports() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-semibold text-gray-900">${data.revenue.toFixed(2)}</p>
+                    <p className="font-semibold text-gray-900">৳{data.revenue.toFixed(2)}</p>
                   </div>
                 </div>
               ))}

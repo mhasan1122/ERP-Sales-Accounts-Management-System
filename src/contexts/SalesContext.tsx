@@ -7,11 +7,14 @@ interface SalesContextType {
   customers: Customer[];
   dashboardStats: DashboardStats;
   addSale: (sale: Omit<Sale, 'id' | 'status'>) => void;
+  updateSale: (sale: Sale) => void;
   updateSaleStatus: (saleId: string, status: Sale['status']) => void;
   deleteSale: (saleId: string) => void;
   addProduct: (product: Omit<Product, 'id'>) => void;
+  updateProduct: (product: Product) => void;
   deleteProduct: (productId: string) => void;
   addCustomer: (customer: Omit<Customer, 'id'>) => void;
+  updateCustomer: (customer: Customer) => void;
   deleteCustomer: (customerId: string) => void;
 }
 
@@ -174,6 +177,12 @@ export function SalesProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const updateSale = (updatedSale: Sale) => {
+    setSales(prev => prev.map(sale =>
+      sale.id === updatedSale.id ? updatedSale : sale
+    ));
+  };
+
   const deleteSale = (saleId: string) => {
     setSales(prev => prev.filter(sale => sale.id !== saleId));
   };
@@ -184,6 +193,12 @@ export function SalesProvider({ children }: { children: ReactNode }) {
       id: Date.now().toString()
     };
     setProducts(prev => [...prev, newProduct]);
+  };
+
+  const updateProduct = (updatedProduct: Product) => {
+    setProducts(prev => prev.map(product =>
+      product.id === updatedProduct.id ? updatedProduct : product
+    ));
   };
 
   const deleteProduct = (productId: string) => {
@@ -198,6 +213,12 @@ export function SalesProvider({ children }: { children: ReactNode }) {
     setCustomers(prev => [...prev, newCustomer]);
   };
 
+  const updateCustomer = (updatedCustomer: Customer) => {
+    setCustomers(prev => prev.map(customer =>
+      customer.id === updatedCustomer.id ? updatedCustomer : customer
+    ));
+  };
+
   const deleteCustomer = (customerId: string) => {
     setCustomers(prev => prev.filter(customer => customer.id !== customerId));
   };
@@ -209,11 +230,14 @@ export function SalesProvider({ children }: { children: ReactNode }) {
       customers,
       dashboardStats,
       addSale,
+      updateSale,
       updateSaleStatus,
       deleteSale,
       addProduct,
+      updateProduct,
       deleteProduct,
       addCustomer,
+      updateCustomer,
       deleteCustomer
     }}>
       {children}

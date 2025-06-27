@@ -1,14 +1,12 @@
-import React from 'react';
-import { 
-  DollarSign, 
-  ShoppingCart, 
-  AlertTriangle, 
+import {
+  ShoppingCart,
+  AlertTriangle,
   TrendingUp,
   Calendar,
   Package
 } from 'lucide-react';
+import { FaBangladeshiTakaSign } from 'react-icons/fa6';
 import { useSales } from '../../contexts/SalesContext';
-import { Sale } from '../../types';
 import { SalesChart } from './SalesChart';
 import { RevenueChart } from './RevenueChart';
 
@@ -18,12 +16,12 @@ export function Dashboard() {
   const recentSales = sales.slice(0, 5);
   const overdueSales = sales.filter(sale => sale.status === 'overdue');
 
-  const StatCard = ({ 
-    title, 
-    value, 
-    icon: Icon, 
-    color, 
-    change 
+  const StatCard = ({
+    title,
+    value,
+    icon: Icon,
+    color,
+    change
   }: {
     title: string;
     value: string | number;
@@ -31,38 +29,38 @@ export function Dashboard() {
     color: string;
     change?: string;
   }) => (
-    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+    <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
       <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm font-medium text-gray-600">{title}</p>
-          <p className="text-3xl font-bold text-gray-900 mt-2">{value}</p>
+        <div className="flex-1 min-w-0">
+          <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">{title}</p>
+          <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mt-1 sm:mt-2">{value}</p>
           {change && (
-            <p className="text-sm text-green-600 mt-1 flex items-center">
-              <TrendingUp className="w-4 h-4 mr-1" />
-              {change}
+            <p className="text-xs sm:text-sm text-green-600 mt-1 flex items-center">
+              <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" />
+              <span className="truncate">{change}</span>
             </p>
           )}
         </div>
-        <div className={`p-3 rounded-full ${color}`}>
-          <Icon className="w-6 h-6 text-white" />
+        <div className={`p-2 sm:p-3 rounded-full ${color} flex-shrink-0 ml-2`}>
+          <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
         </div>
       </div>
     </div>
   );
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600">Overview of your sales and account metrics</p>
+    <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+      <div className="text-center sm:text-left">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Dashboard</h1>
+        <p className="text-sm sm:text-base text-gray-600 mt-1">Overview of your sales and account metrics</p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <StatCard
           title="Total Revenue"
-          value={`$${dashboardStats.totalRevenue.toLocaleString()}`}
-          icon={DollarSign}
+          value={`৳${dashboardStats.totalRevenue.toLocaleString()}`}
+          icon={FaBangladeshiTakaSign}
           color="bg-green-500"
           change="+12.5% from last month"
         />
@@ -88,7 +86,7 @@ export function Dashboard() {
       </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
         <SalesChart />
         <RevenueChart />
       </div>
@@ -106,7 +104,7 @@ export function Dashboard() {
                   <p className="text-xs text-gray-500">Qty: {sale.quantity}</p>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold text-gray-900">${sale.totalAmount.toFixed(2)}</p>
+                  <p className="font-semibold text-gray-900">৳{sale.totalAmount.toFixed(2)}</p>
                   <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
                     sale.status === 'confirmed' ? 'bg-green-100 text-green-800' :
                     sale.status === 'delivered' ? 'bg-blue-100 text-blue-800' :
@@ -141,7 +139,7 @@ export function Dashboard() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="font-semibold text-gray-900">${sale.totalAmount.toFixed(2)}</p>
+                      <p className="font-semibold text-gray-900">৳{sale.totalAmount.toFixed(2)}</p>
                       <span className="inline-flex px-2 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800">
                         {Math.ceil((Date.now() - new Date(sale.deliveryDate).getTime()) / (1000 * 60 * 60 * 24))} days overdue
                       </span>

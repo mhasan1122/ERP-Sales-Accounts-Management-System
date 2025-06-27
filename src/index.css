@@ -1,3 +1,89 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom responsive utilities */
+@layer base {
+  /* Ensure proper touch targets on mobile */
+  button,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"] {
+    min-height: 44px;
+  }
+
+  /* Improve text readability on mobile */
+  body {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Smooth scrolling for better UX */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Prevent horizontal scroll on mobile */
+  body {
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  /* Mobile-first responsive container */
+  .container-responsive {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Responsive text utilities */
+  .text-responsive-xs {
+    @apply text-xs sm:text-sm;
+  }
+
+  .text-responsive-sm {
+    @apply text-sm sm:text-base;
+  }
+
+  .text-responsive-base {
+    @apply text-base sm:text-lg;
+  }
+
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl;
+  }
+
+  .text-responsive-xl {
+    @apply text-xl sm:text-2xl;
+  }
+
+  /* Responsive spacing utilities */
+  .space-responsive {
+    @apply space-y-4 sm:space-y-6;
+  }
+
+  .gap-responsive {
+    @apply gap-4 sm:gap-6;
+  }
+
+  .p-responsive {
+    @apply p-4 sm:p-6;
+  }
+
+  /* Mobile-friendly form inputs */
+  .input-responsive {
+    @apply w-full p-2 sm:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base;
+  }
+
+  /* Responsive button styles */
+  .btn-responsive {
+    @apply px-4 py-2 sm:py-3 rounded-lg transition-colors text-sm sm:text-base;
+  }
+
+  .btn-primary-responsive {
+    @apply btn-responsive bg-blue-600 text-white hover:bg-blue-700;
+  }
+
+  .btn-secondary-responsive {
+    @apply btn-responsive bg-gray-100 text-gray-700 hover:bg-gray-200;
+  }
+}

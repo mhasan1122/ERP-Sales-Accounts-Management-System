@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Edit3, Trash2, User, Mail, Phone, MapPin, ShoppingCart, Calendar } from 'lucide-react';
+import { Edit3, Trash2, User, Mail, Phone, MapPin, ShoppingCart, Calendar, Users } from 'lucide-react';
 import { useSales } from '../../contexts/SalesContext';
 import { Customer } from '../../types';
+import { EditCustomerForm } from './EditCustomerForm';
 
 export function CustomerTable() {
   const { customers, sales, deleteCustomer } = useSales();
-  const [sortBy, setSortBy] = useState<keyof Customer>('name');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [expandedCustomer, setExpandedCustomer] = useState<string | null>(null);
+  const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null);
 
   const getCustomerStats = (customerId: string) => {
     const customerSales = sales.filter(sale => sale.customerId === customerId);
@@ -25,27 +25,9 @@ export function CustomerTable() {
     };
   };
 
-  const sortedCustomers = customers.sort((a, b) => {
-    const aValue = a[sortBy];
-    const bValue = b[sortBy];
-    
-    if (typeof aValue === 'string' && typeof bValue === 'string') {
-      return sortOrder === 'asc' 
-        ? aValue.localeCompare(bValue)
-        : bValue.localeCompare(aValue);
-    }
-    
-    return 0;
-  });
+  const sortedCustomers = customers.sort((a, b) => a.name.localeCompare(b.name));
 
-  const handleSort = (field: keyof Customer) => {
-    if (sortBy === field) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortBy(field);
-      setSortOrder('asc');
-    }
-  };
+
 
   const toggleExpanded = (customerId: string) => {
     setExpandedCustomer(expandedCustomer === customerId ? null : customerId);
@@ -116,7 +98,7 @@ export function CustomerTable() {
                           {stats.totalPurchases} purchases
                         </div>
                         <div className="text-sm font-medium text-green-600">
-                          ${stats.totalSpent.toFixed(2)} total
+                          ৳{stats.totalSpent.toFixed(2)} total
                         </div>
                       </div>
                     </td>
@@ -134,7 +116,11 @@ export function CustomerTable() {
                         >
                           {isExpanded ? 'Hide' : 'View'} Details
                         </button>
-                        <button className="text-indigo-600 hover:text-indigo-900">
+                        <button
+                          onClick={() => setEditingCustomer(customer)}
+                          className="text-indigo-600 hover:text-indigo-900"
+                          title="Edit Customer"
+                        >
                           <Edit3 className="w-4 h-4" />
                         </button>
                         <button 
@@ -195,6 +181,13 @@ export function CustomerTable() {
           <Users className="w-12 h-12 text-gray-300 mx-auto mb-4" />
           <p className="text-gray-500">No customers found</p>
         </div>
+      )}
+
+      {editingCustomer && (
+        <EditCustomerForm
+          customer={editingCustomer}
+          onClose={() => setEditingCustomer(null)}
+        />
       )}
     </div>
   );
